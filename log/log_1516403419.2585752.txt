@@ -1,0 +1,41 @@
+==========Training Log==========
+
+ ===============================
+ CUDA available: False
+ Gradient Clipping Norm: 2.0
+ Word Embedding Dimension: 200
+ Teacher Forcing Ratio: 0.5
+ Minimum Sentence Length: 3
+ Maximum Sentence Length: 14
+ ===============================
+
+ ===============================
+ Read 72979 sentence pairs
+ Trimmed to 72818 sentence pairs
+ 65536 sentence pairs for training
+ 7282 sentence pairs for validation
+ 39085 vocabulary tokens
+ ===============================
+
+ 0m 51s (- 7m 42s) (100 10%) 8.2067
+ ==========Val_Loss: 9.5688==========
+ 1m 34s (- 6m 17s) (200 20%) 5.8547
+ ==========Val_Loss: 5.9689==========
+ 2m 16s (- 5m 18s) (300 30%) 5.4166
+ ==========Val_Loss: 5.7773==========
+ 3m 0s (- 4m 31s) (400 40%) 5.3572
+ ==========Val_Loss: 5.3482==========
+ 3m 44s (- 3m 44s) (500 50%) 4.5119
+ ==========Val_Loss: 5.6389==========
+ 4m 27s (- 2m 58s) (600 60%) 4.7384
+ ==========Val_Loss: 5.5334==========
+ 5m 12s (- 2m 13s) (700 70%) 5.2607
+ ==========Val_Loss: 5.4167==========
+ 5m 57s (- 1m 29s) (800 80%) 5.5029
+ ==========Val_Loss: 4.7583==========
+ 6m 42s (- 0m 44s) (900 90%) 5.2149
+ ==========Val_Loss: 6.3240==========
+ 7m 26s (- 0m 0s) (1000 100%) 5.0209
+ ==========Val_Loss: 6.4451==========
+ 
+Total Training Time: 447.4355380535126sec
