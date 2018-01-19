@@ -3,7 +3,9 @@ from collections import Counter
 from TwitterSearch import *
 from utils import email
 
+
 def main():
+
     targets = []
     try:
         tso = TwitterSearchOrder()  # create a TwitterSearchOrder object
@@ -11,7 +13,6 @@ def main():
         tso.set_language('en')  # we want to see German tweets only
         tso.set_include_entities(False)  # and don't give us all those entity information
 
-        #TODO: store these keys in the different file
         ts = TwitterSearch(
             consumer_key='EsnBdOOkurnvkSODDYWBqkySQ',
             consumer_secret='nFQF2GTOBqbrI28FgCWxHKQV1Ysp5gIMSYVAWrKdUjdIIezwHI',
@@ -46,6 +47,7 @@ def main():
         e.set_recipient('diadld2@naver.com')
         e.send_email(content)
 
+        #TODO: Make this be a server.
     except TwitterSearchException as e:  # take care of all those ugly errors if there are some
         print(e)
 
