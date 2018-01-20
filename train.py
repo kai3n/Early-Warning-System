@@ -28,7 +28,7 @@ log = ['==========Training Log==========\n\n']
 use_cuda = torch.cuda.is_available()
 print('CUDA available:', use_cuda)
 
-maximum_norm = 1.5
+maximum_norm = 2.0
 print_loss_avg = 0
 print_val_loss_avg = 0
 hidden_size = 200
@@ -434,7 +434,7 @@ if __name__ == '__main__':
         call_log_decoder = call_log_decoder.cuda()
 
     start_time = time.time()
-    trainIters(call_log_encoder, call_log_decoder, 10000, print_every=100, plot_every=100, learning_rate=0.01)
+    trainIters(call_log_encoder, call_log_decoder, 60000, print_every=100, plot_every=100, learning_rate=0.05)
 
     log.append('\nTotal Training Time: {}sec\n'.format(time.time()-start_time))
     # save model
