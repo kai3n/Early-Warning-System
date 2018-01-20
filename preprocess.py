@@ -2,6 +2,7 @@ import re
 
 
 class Preprocesor(object):
+
     def __init__(self):
         # Hashtags
         self.hash_regex = re.compile(r"#(\w+)")
@@ -9,6 +10,8 @@ class Preprocesor(object):
         self.hndl_regex = re.compile(r"@(\w+)")
         # URLs
         self.url_regex = re.compile(r"(http|https|ftp)://[a-zA-Z0-9\./]+")
+        # Numbers
+        self.num_regex = re.compile(r"\d+")
         # Spliting by word boundaries
         self.word_bound_regex = re.compile(r"\W+")
         # Repeating words like hurrrryyyyyy
@@ -32,7 +35,7 @@ class Preprocesor(object):
                            for (repl, regx) in self.emoticons]
 
     def hash_repl(self, match):
-        return '__HASH_' + match.group(1).upper()
+        return '__HASH_'# + match.group(1).upper()
 
     def hndl_repl(self, match):
         return '__HNDL_'
@@ -80,18 +83,19 @@ class Preprocesor(object):
             query_regex = "|".join([ re.escape(q) for q in query])
             text = re.sub( query_regex, '__QUER', text, flags=re.IGNORECASE )
 
-        text = re.sub( self.hash_regex, self.hash_repl, text )
-        text = re.sub( self.hndl_regex, self.hndl_repl, text )
-        text = re.sub( self.url_regex, ' __URL ', text )
+        text = re.sub(self.hash_regex, self.hash_repl, text )
+        text = re.sub(self.hndl_regex, self.hndl_repl, text )
+        text = re.sub(self.url_regex, ' __URL ', text )
+        text = re.sub(self.num_regex, ' __NUM ', text)
 
         for (repl, regx) in self.emoticons_regex :
             text = re.sub(regx, '  ' +repl +' ', text)
 
         text = text.replace('\'' ,'')
-        text = re.sub( self.word_bound_regex , self.punctuations_repl, text )
-        text = re.sub( self.rpt_regex, self.rpt_repl, text )
+        text = re.sub(self.word_bound_regex , self.punctuations_repl, text )
+        text = re.sub(self.rpt_regex, self.rpt_repl, text )
 
-        return text
+        return text.lower()
 
 
 if __name__ == '__main__':

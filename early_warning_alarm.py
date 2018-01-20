@@ -2,7 +2,7 @@ from collections import Counter
 
 from TwitterSearch import *
 from utils import email
-
+from preprocess import Preprocesor
 
 def main():
 
@@ -25,27 +25,27 @@ def main():
             # print('{},{}'.format(tweet['created_at'], tweet['text']))
             targets.append(tweet['text'])
         targets = Counter(targets)
-        top10_issues = sorted(targets, key=lambda x: targets[x], reverse=True)[:10]
+        top10_issues = sorted(targets, key=lambda x: targets[x], reverse=True)[:30]
         print(top10_issues)
 
-        #TODO: text preprocessing
-
-        #TODO: make features
-
-        #TODO: do clustering
-
-        #TODO: do sentiment analysis
-
-        # notify if it's unsafe through the email
-        sender_name = 'Gumgum'
-        sender_email = 'jpak1021@gmail.com'
-        sender_pw = 'xxxxxxxxxx'
-        subject = 'Early Warning Alarm for Justin Bieber'
-        content = 'We are writing this to let you know that Justin Beiber is in trouble now.'
-
-        e = email.Email()(sender_email, sender_pw, sender_name, subject)
-        e.set_recipient('diadld2@naver.com')
-        e.send_email(content)
+        #preprocess text
+        # p = Preprocesor()
+        # #TODO: make features
+        #
+        # #TODO: do clustering
+        #
+        # #TODO: do sentiment analysis
+        #
+        # # notify if it's unsafe through the email
+        # sender_name = 'Gumgum'
+        # sender_email = 'jpak1021@gmail.com'
+        # sender_pw = 'xxxxxxxxxx'
+        # subject = 'Early Warning Alarm for Justin Bieber'
+        # content = 'We are writing this to let you know that Justin Beiber is in trouble now.'
+        #
+        # e = email.Email()(sender_email, sender_pw, sender_name, subject)
+        # e.set_recipient('diadld2@naver.com')
+        # e.send_email(content)
 
         #TODO: Make this be a server.
     except TwitterSearchException as e:  # take care of all those ugly errors if there are some

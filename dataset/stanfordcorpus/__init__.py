@@ -10,6 +10,7 @@ Data file format has 6 fields:
 5 - the text of the tweet (Lyx is cool)
 """
 
+TARGET_WORDS_SET = set(['accident', 'adderall', 'addies', 'anger', 'argue', 'arguing', 'argument', 'arrest', 'assault', 'awful', 'beef', 'black', 'break up', 'broken', 'burning', 'careless', 'cheating', 'cocaine', 'crash', 'critical', 'critically', 'cuss', 'dammit', 'daterape drug', 'dead', 'deadly', 'die', 'dirty', 'divorce', 'dope', 'drowning', 'drunk', 'dui', 'dumped', 'egging', 'fatal', 'fearfully', 'fears', 'fighting', 'forgetme', 'found drunk', 'found guilty', 'fuck', 'fucken', 'get baked', 'get high', 'guilty', 'gun', 'hammered', 'harrass', 'hate', 'heart', 'hit', 'horrible', 'hurt', 'hurting', 'jail', 'kill', 'mad', 'marijuana', 'meth', 'out of control', 'pain', 'paparazzo', 'pill', 'pissing', 'police', 'pot', 'prison', 'probation', 'prostitute', 'punch', 'punching', 'racism', 'racist', 'reckless', 'recklessly', 'roaches', 'roche', 'rohypnol', 'roofies', 'ruffies', 'savage', 'scandal', 'screwed', 'sex', 'sexual', 'sexually', 'sexually assault', 'shade', 'shirtless', 'shit', 'shot', 'sick', 'smart drug', 'smoke dope', 'speed', 'spit', 'spitting', 'stoned', 'suspect', 'suspend', 'swear', 'throwing', 'throwing eggs', 'tipsy', 'torturing', 'tragic', 'trauma', 'trouble', 'troublemaker', 'troubling', 'turn up', 'turnt up', 'unsafe', 'victim', 'vulgar', 'wasted', 'weed', 'whore', 'womanizer', 'xanax'])
 FULLDATA = 'training.1600000.processed.noemoticon.csv'
 TESTDATA = 'testdata.manual.2009.06.14.csv'
 
@@ -22,30 +23,43 @@ TEXT    = 5
 
 import csv, re, random
 
-regex = re.compile( r'\w+|\".*?\"' )
+regex = re.compile(r'\w+|\".*?\"')
 
-def getTweetsRawData( fileName ):
-    # read all tweets and labels
-    fp = open( fileName, 'r', encoding = "ISO-8859-1" )
-    reader = csv.reader( fp, delimiter=',', quotechar='"', escapechar='\\' )
+
+def get_tweets_raw_data(out_file):
+
     tweets = []
-    for row in reader:
-        try:
-            tweets.append( [row[POLARITY], row[TEXT]] )
-        except:
-            continue
-    # treat neutral and irrelevant the same
-    for t in tweets:
-        if (t[1] == 'positive'):
-            t[1] = 'pos'
-        elif (t[1] == 'negative'):
-            t[1] = 'neg'
-        elif (t[1] == 'irrelevant')|(t[1] == 'neutral'):
-            t[1] = 'neu'
+    # read all tweets and labels
+    with open(out_file, 'r', encoding = "ISO-8859-1" ) as fp:
+        reader = csv.reader(fp, delimiter=',', quotechar='"', escapechar='\\')
+        for row in reader:
+            try:
+                tweets.append( [row[POLARITY], row[TEXT]] )
+            except:
+                continue
+
+        # treat neutral and irrelevant the same
+        for t in tweets:
+            if (t[1] == 'positive'):
+                t[1] = 'pos'
+            elif (t[1] == 'negative'):
+                t[1] = 'neg'
+            elif (t[1] == 'irrelevant')|(t[1] == 'neutral'):
+                t[1] = 'neu'
 
     return tweets # 0: Text # 1: class # 2: subject # 3: query
 
-def get_class( polarity ):
+
+def store_tweets_raw_data(data, out_file):
+
+    with open(out_file, 'w') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=',', quotechar='"', escapechar='\\')
+        for each in data:
+            spamwriter.writerow([each])
+
+
+
+def get_class(polarity):
     if polarity in ['0', '1']:
         return 'neg'
     elif polarity in ['3', '4']:
@@ -55,13 +69,15 @@ def get_class( polarity ):
     else:
         return 'err'
 
-def get_query( subject ):
+
+def get_query(subject):
     if subject == 'NO_QUERY':
         return []
     else:
         return regex.findall(subject)
 
-def getAllQueries(in_file):
+
+def get_all_queries(in_file):
 
     fp = open(in_file , 'r')
     rd = csv.reader(fp, delimiter=',', quotechar='"' )
@@ -78,7 +94,8 @@ def getAllQueries(in_file):
 
     return queries
 
-def sampleCSV( in_file, out_file, K=100 ):
+
+def sample_csv(in_file, out_file, K=100):
 
     fp = open(in_file , 'r')
     fp2 = open(out_file , 'w')
@@ -92,7 +109,8 @@ def sampleCSV( in_file, out_file, K=100 ):
 
     return 0
 
-def randomSampleCSV( in_file, out_file, K=100 ):
+
+def random_sample_csv(in_file, out_file, K=100):
 
     fp = open(in_file , 'r')
     fq = open(out_file, 'w')
@@ -113,7 +131,8 @@ def randomSampleCSV( in_file, out_file, K=100 ):
 
     min(1, K/i)
 
-def getNormalisedCSV( in_file, out_file ):
+
+def get_normalised_csv(in_file, out_file):
     fp = open(in_file , 'r')
     rd = csv.reader(fp, delimiter=',', quotechar='"' )
 
@@ -124,10 +143,11 @@ def getNormalisedCSV( in_file, out_file ):
         queries = get_query(row[SUBJ])
         wr.writerow( [row[TEXT], get_class(row[POLARITY]), row[SUBJ]] + [len(queries)] + queries )
 
-def getNormalisedTweets(in_file):
+
+def get_normalised_tweets(in_file):
     fp = open(in_file , 'r')
     rd = csv.reader(fp, delimiter=',', quotechar='"' )
-    #print in_file, countlines( in_file )
+    #print in_file, count_lines( in_file )
 
     tweets = []
     count = 0
@@ -140,32 +160,37 @@ def getNormalisedTweets(in_file):
     #print 'len(tweets) =', len(tweets)
     return tweets
 
-def countlines( filename ):
+
+def count_lines(filename):
     count = 0
-    with open( filename, 'r' ) as fp:
+    with open(filename, 'r') as fp:
         for line in fp:
             count+=1
     return count
 
-#getAllQueries( 'testdata.manual.2009.06.14.csv' )
-#getAllQueries( 'training.1600000.processed.noemoticon.csv' )
 
-res = getTweetsRawData('training.1600000.processed.noemoticon.csv')
+if __name__ == '__main__':
 
-for c, t in res:
-    print(c, t)
+    # get_all_queries( 'testdata.manual.2009.06.14.csv' )
+    # get_all_queries( 'training.1600000.processed.noemoticon.csv' )
 
-#randomSampleCSV(FULLDATA, FULLDATA+'.sample.csv')
-#sampleCSV(TESTDATA, TESTDATA+'.sample.csv')
+    from preprocess import Preprocesor
+    p = Preprocesor()
 
-#getNormalisedCSV(FULLDATA+'.sample.csv', FULLDATA+'.norm.csv')
+    tweets = get_tweets_raw_data('training.1600000.processed.noemoticon.csv')
+    res = []
+    for _, text in tweets:
+        for word in text.split():
+            if word in TARGET_WORDS_SET:
+                res.append(p.preprocess(text))
+    store_tweets_raw_data(res, 'train.txt')
 
-#randomSampleCSV(FULLDATA, FULLDATA+'.100000.sample.csv', K=100000)
-#getNormalisedCSV(FULLDATA+'.100000.sample.csv', FULLDATA+'.100000.norm.csv')
+    #random_sample_csv(FULLDATA, FULLDATA+'.sample.csv')
+    #sample_csv(TESTDATA, TESTDATA+'.sample.csv')
+
+    #get_normalised_csv(FULLDATA+'.sample.csv', FULLDATA+'.norm.csv')
+
+    #random_sample_csv(FULLDATA, FULLDATA+'.100000.sample.csv', K=100000)
+    #get_normalised_csv(FULLDATA+'.100000.sample.csv', FULLDATA+'.100000.norm.csv')
 
 
-SampleTweetsStats = '''
-   Class    Count Example
-     neg     2449 @jbrotherlove I thought it was a great love story 
-     pos     2551 I hope that these kitchen renos don't last any longer... they are so annoying
-'''
