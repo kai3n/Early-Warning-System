@@ -1,0 +1,5 @@
+nltk==3.2.4
+numpy==1.12.1
+torch==0.1.12.post2
+torchvision==0.1.8
+TwitterSearch==1.0.2
