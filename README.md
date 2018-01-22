@@ -158,16 +158,29 @@ Replace Expression: `\1\1`
 ## 6 Model
 
 ### 6.1 Auto Encoder
-#### Encoder
-GRU
-#### Number of Encoder Layer
-1
-#### Decoder
-GRU+Attention Layer
-#### Number of Decoder Layer
+
+|                         |               |
+| ----------------------- |:-------------:|
+| Encoder                 | GRU           |
+| Number of Encoder Layer | 1             |
+| Decoder                 | GRU+Attention |
+| Number of Encoder Layer | 1             |
 
 
 ### 6.2 Training Environment
+
+|                          |                             |
+| ------------------------ |:---------------------------:|
+| Min Length               |  3                          |
+| Max Length               | 15                          |
+| Pre-trained Model        | GloVe                       |
+| Teacher forcing ratio    | 0.5                         |
+| Maximum Norm             | 2.0                         |
+| Word Embedding Dimension | 200                         |
+| Loss function            | Negative Log likelihood     |
+| Optimizer                | Stochastic Gradient Descent |
+
+
 #### Min Length
 3
 #### Max Length
