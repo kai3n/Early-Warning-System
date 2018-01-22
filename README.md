@@ -181,24 +181,6 @@ Replace Expression: `\1\1`
 | Optimizer                | Stochastic Gradient Descent |
 
 
-#### Min Length
-3
-#### Max Length
-15
-#### Pre-traoned Word Embedding Model
-GloVe
-#### Teacher forcing ratio
-0.5
-#### Maximum Norm
-2.0
-#### Word Embedding Dimension
-200
-#### Loss function
-Negative Log likelihood
-#### Optimizer
-Stochastic Gradient Descent
-
-
 ##  7  Experimentation
 
 We train 90% of our data using different combinations of features and test
