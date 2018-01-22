@@ -183,7 +183,7 @@ if __name__ == '__main__':
         for word in text.split():
             if word in TARGET_WORDS_SET:
                 res.append(p.preprocess(text))
-    store_tweets_raw_data(res, 'train2.txt')
+    store_tweets_raw_data(res, 'train.txt')
 
     #random_sample_csv(FULLDATA, FULLDATA+'.sample.csv')
     #sample_csv(TESTDATA, TESTDATA+'.sample.csv')

@@ -182,7 +182,7 @@ Replace Expression: `\1\1`
 | Number of Encoder Layer | 1             |
 
 
-### 6.2 Training Environment
+### 6.2 Hyperparameters and train information
 
 |                          |                             |
 | ------------------------ |:---------------------------:|
@@ -194,6 +194,15 @@ Replace Expression: `\1\1`
 | Word Embedding Dimension | 200                         |
 | Loss function            | Negative Log likelihood     |
 | Optimizer                | Stochastic Gradient Descent |
+
+### 6.3 Train Environment
+|                          |                             |
+| ------------------------ |:---------------------------:|
+| Training time            |  about 48 hours(172,438 sec)|
+| Machine                  | MacBook Pro Processor 2GHz Intel Core i7 |
+| Memory                   | 8 GB 1600 MHz DDR3                       |
+| Graphics                 | Intel Iris Pro 1536 MB                   |
+
 
 
 ##  7  Experimentation
