@@ -207,46 +207,33 @@ Replace Expression: `\1\1`
 
 ##  7  Experimentation
 
+The average loss of this model is approximately 0.5~ 0.6.
+That means, as long as I put the text which is in the same domain with the model, the loss would be about 0.5 or less.
+That's why I put the threshold as 0.5. If the loss is less than 0.5, I consider the tweet as a unsafe tweet.
 
+### unsafe tweets
 ![unsafe](unsafe.png)
-![safe](safe.png)
 
-We train 90% of our data using different combinations of features and test
-them on the remaining 10%. We take the features in the following combinations
-- only unigrams, unigrams + filtered bigrams and trigrams, unigrams +
-negation, unigrams + filtered bigrams and trigrams + negation. We then train
-classifiers using different classification algorithms - Naive Bayes Classifier
-and Maximum Entropy Classifier.
+### safe tweets
+![safe](safe.png)
 
 
 ##  8  Future Work
 
-filtering the by more specific phrases
-
-**Stemming Algorithms**
-     bb
-
-** N-gram**
-    bb
+Due to time and resources, I couldn't try several more ideas.
+If I have more data, I can filter the data with more specific words or phrases.
+In addition, I can also try to apply stemming algorithms or n-gram model if I have a better machine to train.
+With the dependency parser and pos tagger, I would be able to get the subject of the sentence.
+If Justin Bieber is not the subject of the given sentence, I can skip the sentence or decrease weight of the sentence for the classification.
 
 
 ##  9  Conclusion
 
-We create a sentiment classifier for twitter using labelled
-data sets. We also investigate the relevance of using a double step classifier
-and negation detection for the purpose of sentiment analysis.
-
-Our baseline classifier that uses just the unigrams achieves an accuracy of
-around 80.00%. Accuracy of the classifier increases if we use negation
-detection or introduce bigrams and trigrams. Thus we can conclude that both
-Negation Detection and higher order n-grams are useful for the purpose of text
-classification. However, if we use both n-grams and negation detection, the
-accuracy falls marginally. We also note that Single step classifiers out
-perform double step classifiers. In general, Naive Bayes Classifier performs
-better than Maximum Entropy Classifier.
-
-We achieve the best accuracy of 86.68% in the case of Unigrams + Bigrams +
-Trigrams, trained on Naive Bayes Classifier.
+I created a early warning system for twitter data sets, and my auto-encoder works very well by showing that if I put the sentence which is in the same domain with this model, I can get the almost same sentence.
+For the given tweets samples from Gumgum, my classifier achieved an accuracy of around 60% with adjusted threshold.
+However, due to the training time, I just trained 2 epoch of the train set.
+If I train more epoch and have more features by adding n-gram, stemming or synonym checking, the accuracy would be more improved.
+I really enjoyed this challenge and thanks your team for me to have this awesome challenge.
 
 
 ## References
