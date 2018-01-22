@@ -33,7 +33,7 @@ class EncoderRNN(nn.Module):
             output, hidden = self.gru(output, hidden)
         return output, hidden
 
-    def initHidden(self):
+    def init_hidden(self):
         result = Variable(torch.zeros(1, 1, self.hidden_size))
         if use_cuda:
             return result.cuda()
@@ -60,7 +60,7 @@ class DecoderRNN(nn.Module):
         output = self.softmax(self.out(output[0]))
         return output, hidden
 
-    def initHidden(self):
+    def init_hidden(self):
         result = Variable(torch.zeros(1, 1, self.hidden_size))
         if use_cuda:
             return result.cuda()
@@ -111,7 +111,7 @@ class AttnDecoderRNN(nn.Module):
         output = F.log_softmax(self.out(output[0]))
         return output, hidden, attn_weights
 
-    def initHidden(self):
+    def init_hidden(self):
         result = Variable(torch.zeros(1, 1, self.hidden_size))
         if use_cuda:
             return result.cuda()

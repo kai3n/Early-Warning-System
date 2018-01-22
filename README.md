@@ -35,10 +35,29 @@ $python train.py
 $python train.py encoder_model decoder_model
 ```
 
+### 2.3 testing classification
+```shell
+$python classifier.py
+.
+.
+.
+Input:Justin Bieber is a good singer
+Trimmed text:  justin bieber is a good singer
+Maxlen of text by Random Index Picker:  justin bieber is a good singer
+Original text sequence:  ['justin', 'bieber', 'is', 'a', 'good', 'singer']
+Decoded text sequence:  ['justin', 'hurt', 'is', 'a', 'good', 'pieces', '<EOS>']
+Decoded text total loss:  [ 7.29614544]
+Decoded text avg loss:  [ 1.21602428]
+Detection Result: Safe
 
-### 2.3 How to run the application
+Input:
+```
 
-Coming soon.
+### 2.4 How to run the application
+
+```shell
+$python early_warning_alarm.py --keyword 'Justin Bieber' --sender_email put_your_email --sender_pwd put_your_pwd --recipient_email put_recipient_email
+```
 
 
 ##  3  Approach(My thought process)

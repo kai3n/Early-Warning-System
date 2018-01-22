@@ -55,11 +55,11 @@ class Lang:
         self.index2word = {0: "SOS", 1: "EOS", 2: "OOV"}
         self.n_words = 2  # Count SOS and EOS
 
-    def addSentence(self, sentence):
+    def add_sentence(self, sentence):
         for word in sentence.split():
-            self.addWord(word)
+            self.add_word(word)
 
-    def addWord(self, word):
+    def add_word(self, word):
         if word not in self.word2index:
             self.word2index[word] = self.n_words
             self.word2count[word] = 1
@@ -69,14 +69,14 @@ class Lang:
             self.word2count[word] += 1
 
 
-def unicodeToAscii(s):
+def unicode_to_ascii(s):
     return ''.join(
         c for c in unicodedata.normalize('NFD', s)
         if unicodedata.category(c) != 'Mn'
     )
 
 
-def readLangs(lang1, lang2, reverse=False):
+def read_langs(lang1, lang2, reverse=False):
 
     p = Preprocesor()
     print("Reading lines...")
@@ -101,14 +101,14 @@ def readLangs(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs
 
 
-def randomPicker(p):
+def random_picker(p):
     if len(p[0].split()) >= MAX_LENGTH:
         random_index = random.randrange(len(p[0].split()) - (MAX_LENGTH - 1) + 1)
         p[0] = ' '.join(p[0].split()[random_index:random_index+MAX_LENGTH-1])
         p[1] = p[0]
     return p
 
-def maxlenPicker(p):
+def maxlen_picker(p):
     if len(p[0].split()) >= MAX_LENGTH:
         p[0] = ' '.join(p[0].split()[:MAX_LENGTH-1])
         p[1] = p[0]
@@ -116,21 +116,21 @@ def maxlenPicker(p):
 
 
 
-def filterPair(p):
+def filter_pair(p):
     return MIN_LENGTH <= len(p[0].split()) < MAX_LENGTH and \
            MIN_LENGTH <= len(p[1].split()) < MAX_LENGTH
 
 
-def filterPairs(pairs):
-    return [pair for pair in pairs if filterPair(randomPicker(pair))]
+def filter_pairs(pairs):
+    return [pair for pair in pairs if filter_pair(random_picker(pair))]
 
 
-def prepareData(lang1, lang2, reverse=False):
-    input_lang, output_lang, pairs = readLangs(lang1, lang2, reverse)
+def prepare_data(lang1, lang2, reverse=False):
+    input_lang, output_lang, pairs = read_langs(lang1, lang2, reverse)
     print("Read {} sentence pairs".format(len(pairs)))
     log.append('===============================\n')
     log.append("Read {} sentence pairs\n".format(len(pairs)))
-    pairs = filterPairs(pairs)
+    pairs = filter_pairs(pairs)
     print("Trimmed to {} sentence pairs".format(len(pairs)))
     log.append("Trimmed to {} sentence pairs\n".format(len(pairs)))
     split_divider = int(len(pairs) * 0.9)
@@ -143,8 +143,8 @@ def prepareData(lang1, lang2, reverse=False):
 
     print("Counting words...")
     for pair in pairs:
-        input_lang.addSentence(pair[0])
-        output_lang.addSentence(pair[1])
+        input_lang.add_sentence(pair[0])
+        output_lang.add_sentence(pair[1])
     print("Counted words:")
     print(input_lang.name, input_lang.n_words)
     print(output_lang.name, output_lang.n_words)
@@ -153,7 +153,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs, val_pairs
 
 
-def indexesFromSentence(lang, sentence):
+def indexes_from_sentence(lang, sentence):
     indexes = []
     for word in sentence.split():
         if lang.word2index.get(word) is not None:
@@ -164,8 +164,8 @@ def indexesFromSentence(lang, sentence):
     # return [lang.word2index[word] for word in sentence.split(' ') if lang.word2index.get(word) is not None]
 
 
-def variableFromSentence(lang, sentence):
-    indexes = indexesFromSentence(lang, sentence)
+def variable_from_sentence(lang, sentence):
+    indexes = indexes_from_sentence(lang, sentence)
     indexes.append(EOS_token)
     result = Variable(torch.LongTensor(indexes).view(-1, 1))
     if use_cuda:
@@ -174,15 +174,15 @@ def variableFromSentence(lang, sentence):
         return result
 
 
-def variablesFromPair(pair):
-    input_variable = variableFromSentence(input_lang, pair[0])
-    target_variable = variableFromSentence(output_lang, pair[1])
+def variables_from_pair(pair):
+    input_variable = variable_from_sentence(input_lang, pair[0])
+    target_variable = variable_from_sentence(output_lang, pair[1])
     return (input_variable, target_variable)
 
 
 def train(input_variable, target_variable, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion,
           max_length=MAX_LENGTH, is_validation=False):
-    encoder_hidden = encoder.initHidden()
+    encoder_hidden = encoder.init_hidden()
 
     encoder_optimizer.zero_grad()
     decoder_optimizer.zero_grad()
@@ -243,18 +243,18 @@ def train(input_variable, target_variable, encoder, decoder, encoder_optimizer, 
     return loss.data[0] / target_length
 
 
-def asMinutes(s):
+def as_minutes(s):
     m = math.floor(s / 60)
     s -= m * 60
     return '%dm %ds' % (m, s)
 
 
-def timeSince(since, percent):
+def time_since(since, percent):
     now = time.time()
     s = now - since
     es = s / (percent)
     rs = es - s
-    return '%s (- %s)' % (asMinutes(s), asMinutes(rs))
+    return '%s (- %s)' % (as_minutes(s), as_minutes(rs))
 
 # def showPlot(points, val_points, epoch):
 #     plt.plot(epoch, points)
@@ -266,7 +266,7 @@ def timeSince(since, percent):
 #     # plt.show()
 
 
-def trainIters(encoder, decoder, n_iters, print_every=500, plot_every=500, learning_rate=0.01):
+def train_iters(encoder, decoder, n_iters, print_every=500, plot_every=500, learning_rate=0.01):
     start = time.time()
     global print_loss_avg
     global print_val_loss_avg
@@ -282,7 +282,7 @@ def trainIters(encoder, decoder, n_iters, print_every=500, plot_every=500, learn
     encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optimizer = optim.SGD(decoder.parameters(), lr=learning_rate)
 
-    training_pairs = [variablesFromPair(random.choice(pairs))
+    training_pairs = [variables_from_pair(random.choice(pairs))
                       for i in range(n_iters)]
     criterion = nn.NLLLoss()
     epoch = []
@@ -300,12 +300,12 @@ def trainIters(encoder, decoder, n_iters, print_every=500, plot_every=500, learn
             epoch.append(iter)
             print_loss_avg = print_loss_total / print_every
             print_loss_total = 0
-            print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
+            print('%s (%d %d%%) %.4f' % (time_since(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg))
-            log.append('%s (%d %d%%) %.4f\n' % (timeSince(start, iter / n_iters),
+            log.append('%s (%d %d%%) %.4f\n' % (time_since(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg))
 
-            validating_pairs = [variablesFromPair(random.choice(val_pairs))
+            validating_pairs = [variables_from_pair(random.choice(val_pairs))
                                 for _ in range(print_every // 9)]
             for val_iter in range(1, print_every // 9 + 1):
                 validating_pair = validating_pairs[val_iter - 1]
@@ -334,9 +334,9 @@ def trainIters(encoder, decoder, n_iters, print_every=500, plot_every=500, learn
 
 
 def evaluate(encoder, decoder, sentence, input_lang, output_lang, max_length=MAX_LENGTH):
-    input_variable = variableFromSentence(input_lang, sentence)
+    input_variable = variable_from_sentence(input_lang, sentence)
     input_length = input_variable.size()[0]
-    encoder_hidden = encoder.initHidden()
+    encoder_hidden = encoder.init_hidden()
 
     encoder_outputs = Variable(torch.zeros(max_length, encoder.hidden_size))
     encoder_outputs = encoder_outputs.cuda() if use_cuda else encoder_outputs
@@ -375,7 +375,7 @@ def evaluate(encoder, decoder, sentence, input_lang, output_lang, max_length=MAX
     return decoded_words, decoder_attentions[:di + 1], loss.data.numpy()
 
 
-def evaluateRandomly(encoder, decoder, n=20):
+def evaluate_randomly(encoder, decoder, n=20):
     for i in range(n):
         pair = random.choice(pairs)
         print('>', pair[0])
@@ -390,7 +390,7 @@ if __name__ == '__main__':
 
     p = Preprocesor()
 
-    input_lang, output_lang, pairs, val_pairs = prepareData('eng', 'eng', False)
+    input_lang, output_lang, pairs, val_pairs = prepare_data('eng', 'eng', False)
 
     # pre-trained word embedding
     embeddings_index = {}
@@ -434,7 +434,7 @@ if __name__ == '__main__':
         call_log_decoder = call_log_decoder.cuda()
 
     start_time = time.time()
-    trainIters(call_log_encoder, call_log_decoder, 100000, print_every=100, plot_every=100, learning_rate=0.05)
+    train_iters(call_log_encoder, call_log_decoder, 60000, print_every=100, plot_every=100, learning_rate=0.05)
 
     log.append('\nTotal Training Time: {}sec\n'.format(time.time()-start_time))
     # save model
