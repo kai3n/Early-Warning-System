@@ -9,8 +9,39 @@ While I was looking for a project which is similar to trump2cash, fortunately, I
 
 ![TweetSamples](TweetSamples.png)
 
+## 2 How to run
 
-##  2  Approach(My thought process)
+### 2.1 Prerequisites
+
+This project is based on Python 3.5
+
+```
+pip install -r requirement.txt
+```
+
+Stanford Twitter Corpus: `http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip`
+
+GloVe pre-trained vector: `https://nlp.stanford.edu/projects/glove/`
+
+### 2.2 How to train
+
+#### Training from the beginning
+```shell
+$python train.py
+```
+
+#### Training with loaded model
+```shell
+$python train.py encoder_model decoder_model
+```
+
+
+### 2.3 How to run the application
+
+Coming soon.
+
+
+##  3  Approach(My thought process)
 
 I was thinking about what kinds of labeled dataset I might be able to use to implement this binary classification. This is because the supervised learning make usually better outcome than unsupervised learning. However, I couldn’t find the right dataset for this problem. The most similar one is Twitter dataset for sentiment analysis, but this is not that perfectly matched with this problem even though they have relationship with each other. I guess there would be many neutral or positive tweets which are indicating Bieber’s trouble such as "Justin Bieber DRUNK SINGING, Continues Celebrating 21st Birthday”.
 
@@ -21,21 +52,15 @@ I was pondering for a long time as I was lying down on my bed at night, and I th
 First of all, I am going to collect a bunch of vocabulary list that is related to celebrities’ trouble such as drunk driving, guilty, or drug.
 Second, I am going to filter the tweets that don’t include any vocabulary of the list based on the twitter sentiment dataset. What I get from the filtered dataset would have the same domain in terms of troubles. In other words, the train set would be only composed of anomalies. Third, my strategy is to build auto-encoder with this train set. If I put normal tweets that aren't related to troubles, the loss of the model would get high. Otherwise, the loss would get close to 0. If the loss is close to 0, I will consider that this tweet might talk about troubles. Thus, if a tweet make the loss low and a tweet include the target word such as “Justin Bieber”, I will notify this tweet through email.
 
-## 3 Application Pipeline
+##  4  Application Pipeline
 ![Pipeline](pipeline.png)
 
-##  4 Datasets
 
-One of the major challenges in Sentiment Analysis of Twitter is to collect a
-labelled dataset. Researchers have made public the following datasets for
-training and testing classifiers.
-
-
-##  5 Preprocessing
+##  5  Preprocessing
 
 User-generated content on the web is seldom present in a form usable for
 learning. It becomes important to normalize the text by applying a series of
-pre-processing steps. We have applied an extensive set of pre-processing steps
+pre-processing steps. I have applied an extensive set of pre-processing steps
 to decrease the size of the feature set to make it suitable for learning
 algorithms.
 
@@ -67,7 +92,7 @@ enables Twitter to alert users if the link leads out of its domain. From the
 point of view of text classification, a particular URL is not important.
 However, presence of a URL can be an important feature. Regular expression for
 detecting a URL is fairly complex because of different types of URLs that can
-be there, but because of Twitter’s shortening service, we can use a relatively
+be there, but because of Twitter’s shortening service, I can use a relatively
 simple regular expression.
 
 Regular Expression: `(http|https|ftp)://[a-zA-Z0-9\\./]+`
@@ -78,7 +103,7 @@ Replace Expression: `URL`
 
 Use of emoticons is very prevalent throughout the web, more so on micro-
 blogging sites. We identify the following emoticons and replace them with a
-single word. Table 4 lists the emoticons we are currently detecting. All other
+single word. Table 4 lists the emoticons I am currently detecting. All other
 emoticons would be ignored.
 
 <div style="text-align:center">
@@ -124,13 +149,42 @@ quotes that might exist in the text.
 
 People often use repeating characters while using colloquial language, like
 "I’m in a hurrryyyyy", "We won, yaaayyyyy!" As our final pre-processing step,
-we replace characters repeating more than twice as two characters.
+I replace characters repeating more than twice as two characters.
 
 Regular Expression: `(.)\1{1,}`
 
 Replace Expression: `\1\1`
 
-## 6 How to run
+## 6 Model
+
+### 6.1 Auto Encoder
+#### Encoder
+GRU
+#### Number of Encoder Layer
+1
+#### Decoder
+GRU+Attention Layer
+#### Number of Decoder Layer
+
+
+### 6.2 Training Environment
+#### Min Length
+3
+#### Max Length
+15
+#### Pre-traoned Word Embedding Model
+GloVe
+#### Teacher forcing ratio
+0.5
+#### Maximum Norm
+2.0
+#### Word Embedding Dimension
+200
+#### Loss function
+Negative Log likelihood
+#### Optimizer
+Stochastic Gradient Descent
+
 
 ##  7  Experimentation
 
