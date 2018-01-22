@@ -7,6 +7,9 @@ As people are getting involved in Social Network Services such as Twitter, we ca
 
 While I was looking for a project which is similar to trump2cash, fortunately, I got a interesting coding challenge from Gumgum Inc., and it’s related to machine learning and natural language processing. The challenge is to build an an early warning system based on Twitter feed that would alert me when the Bieber is in trouble like whether it’s for drunk driving or objectionable videos. to better understand, see the picture below.
 
+![TweetSamples](TweetSamples.png)
+
+
 ##  2  Approach(My thought process)
 
 I was thinking about what kinds of labeled dataset I might be able to use to implement this binary classification. This is because the supervised learning make usually better outcome than unsupervised learning. However, I couldn’t find the right dataset for this problem. The most similar one is Twitter dataset for sentiment analysis, but this is not that perfectly matched with this problem even though they have relationship with each other. I guess there would be many neutral or positive tweets which are indicating Bieber’s trouble such as "Justin Bieber DRUNK SINGING, Continues Celebrating 21st Birthday”.
@@ -19,6 +22,7 @@ First of all, I am going to collect a bunch of vocabulary list that is related t
 Second, I am going to filter the tweets that don’t include any vocabulary of the list based on the twitter sentiment dataset. What I get from the filtered dataset would have the same domain in terms of troubles. In other words, the train set would be only composed of anomalies. Third, my strategy is to build auto-encoder with this train set. If I put normal tweets that aren't related to troubles, the loss of the model would get high. Otherwise, the loss would get close to 0. If the loss is close to 0, I will consider that this tweet might talk about troubles. Thus, if a tweet make the loss low and a tweet include the target word such as “Justin Bieber”, I will notify this tweet through email.
 
 ## Application Pipeline
+![Pipeline](pipeline.png)
 
 ##  3 Datasets
 

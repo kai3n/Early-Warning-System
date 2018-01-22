@@ -434,7 +434,7 @@ if __name__ == '__main__':
         call_log_decoder = call_log_decoder.cuda()
 
     start_time = time.time()
-    trainIters(call_log_encoder, call_log_decoder, 60000, print_every=100, plot_every=100, learning_rate=0.05)
+    trainIters(call_log_encoder, call_log_decoder, 100000, print_every=100, plot_every=100, learning_rate=0.05)
 
     log.append('\nTotal Training Time: {}sec\n'.format(time.time()-start_time))
     # save model
