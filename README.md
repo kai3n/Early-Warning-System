@@ -103,7 +103,7 @@ Replace Expression: `URL`
 
 Use of emoticons is very prevalent throughout the web, more so on micro-
 blogging sites. We identify the following emoticons and replace them with a
-single word. Table 4 lists the emoticons I am currently detecting. All other
+single word. Below lists the emoticons I am currently detecting. All other
 emoticons would be ignored.
 
 <div style="text-align:center">
@@ -116,8 +116,6 @@ emoticons would be ignored.
 <tr><td align="left"><tt>EMOT_FROWN</tt>    </td><td align="left"><tt>:-(</tt>  </td><td align="left"><tt>:(</tt>   </td><td align="left"><tt>(:</tt>   </td><td align="left"><tt>(-:</tt>  </td><td align="left"><tt></tt>     </td><td align="left"><tt></tt> </td></tr>
 <tr><td align="left"><tt>EMOT_CRY</tt>  </td><td align="left"><tt>:,(</tt>  </td><td align="left"><tt>:'(</tt>  </td><td align="left"><tt>:"(</tt>  </td><td align="left"><tt>:((</tt>  </td><td align="left"><tt></tt>     </td><td align="left"><tt></tt> </td></tr></table>
 
-
-<div style="text-align:center">Table 4: List of Emoticons</div>
 <a id="tab:emot">
 </a>
 </div>
@@ -127,8 +125,7 @@ emoticons would be ignored.
 Although not all Punctuations are important from the point of view of
 classification but some of these, like question mark, exclamation mark can
 also provide information about the sentiments of the text. We replace every
-word boundary by a list of relevant punctuations present at that point. Table
-5 lists the punctuations currently identified. We also remove any single
+word boundary by a list of relevant punctuations present at that point. Below lists the punctuations currently identified. We also remove any single
 quotes that might exist in the text.
 
 <div style="text-align:center">
@@ -140,7 +137,6 @@ quotes that might exist in the text.
 <tr><td align="left"><tt>PUNC_ELLP</tt> </td><td align="left"><tt>...</tt> </td><td align="left"><tt>…</tt> </td></tr></table>
 
 
-<div style="text-align:center">Table 5: List of Punctuations</div>
 <a id="tab:punc">
 </a>
 </div>
