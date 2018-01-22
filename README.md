@@ -159,7 +159,6 @@ Replace Expression: `\1\1`
 
 ### 6.1 Auto Encoder
 
-|                         |               |
 | ----------------------- |:-------------:|
 | Encoder                 | GRU           |
 | Number of Encoder Layer | 1             |
@@ -169,7 +168,6 @@ Replace Expression: `\1\1`
 
 ### 6.2 Training Environment
 
-|                          |                             |
 | ------------------------ |:---------------------------:|
 | Min Length               |  3                          |
 | Max Length               | 15                          |
