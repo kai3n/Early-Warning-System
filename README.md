@@ -2,10 +2,10 @@
 
 ##  1  Introduction
 
-As people are getting involved in Social Network Services such as Twitter, we can come up with a bunch of ideas about how to use that data to make the useful application. A year ago, I’ve seen that one of Googler created trump2cash[1] which the author buys the stock based on trump's feeling with sentiment analysis on his twitter feed.
+As people are getting involved in Social Networking Services such as Twitter, we can come up with a bunch of ideas about how to use that data to make useful applications. A year ago, I saw a Googler had created trump2cash[1] which the author buys stock based on Trump's feelings using sentiment analysis on his Twitter feed.
 
 
-While I was looking for a project which is similar to trump2cash, fortunately, I got a interesting coding challenge from Gumgum Inc., and it’s related to machine learning and natural language processing. The challenge is to build an an early warning system based on Twitter feed that would alert me when the Bieber is in trouble like whether it’s for drunk driving or objectionable videos. to better understand, see the picture below.
+While I was looking for a project which is similar to trump2cash, I got an interesting coding challenge from Gumgum Inc. related to machine learning and natural language processing. The challenge is to build an early warning system based on Twitter feed that would alert me when Justin Bieber is in trouble like drunk driving or objectionable videos. To better understand, see the picture below.
 
 ![TweetSamples](TweetSamples.png)
 
@@ -62,14 +62,14 @@ $python early_warning_alarm.py --keyword 'Justin Bieber' --sender_email put_your
 
 ##  3  Approach(My thought process)
 
-I was thinking about what kinds of labeled dataset I might be able to use to implement this binary classification. This is because the supervised learning make usually better outcome than unsupervised learning. However, I couldn’t find the right dataset for this problem. The most similar one is Twitter dataset for sentiment analysis, but this is not that perfectly matched with this problem even though they have relationship with each other. I guess there would be many neutral or positive tweets which are indicating Bieber’s trouble such as "Justin Bieber DRUNK SINGING, Continues Celebrating 21st Birthday”.
+I was thinking about what kinds of labeled dataset I might be able to use to implement this binary classification. This is because the supervised learning usually has a better outcome than unsupervised learning. However, I couldn’t find the right dataset for this problem. The most similar one is Twitter dataset for sentiment analysis, but this is not that perfectly matched with this problem. I guess there would be many neutral or positive tweets which are indicating Bieber’s trouble such as "Justin Bieber DRUNK SINGING, Continues Celebrating 21st Birthday”.
 
-After that I was thinking about labeling twitter data manually and do supervised learning with any well known algorithm. However, considering the given 14 days for this challenge, that period was not enough to spend time to labeling manually(Even, I had to do a bunch of class HWs) Finally, I gave up doing supervised learning for this challenge and then tried to come up with unsupervised learning or semi-supervised learning which don’t need labels.
+After that I was thinking about labeling Twitter data manually and do supervised learning with any well known algorithm. However, considering the given 14 days for this challenge, that period was not enough to spend time to label manually (I still had to do a bunch of class HWs) Finally, I gave up doing supervised learning for this challenge and then tried to come up with an unsupervised learning or semi-supervised learning strategy which doesn’t need labels.
 
 I was pondering for a long time as I was lying down on my bed at night, and I thought I have to basically make a news aggregator. Then, I need to find a bunch of posts about the same topic and filter those topics to the ones I want. I came up with clustering algorithms such as K mean Clustering. Similarly, I got another idea which use anomaly detection to find out normal input, and I decided to use this idea to solve this problem.
 
-First of all, I am going to collect a bunch of vocabulary list that is related to celebrities’ trouble such as drunk driving, guilty, or drug.
-Second, I am going to filter the tweets that don’t include any vocabulary of the list based on the twitter sentiment dataset. What I get from the filtered dataset would have the same domain in terms of troubles. In other words, the train set would be only composed of anomalies. Third, my strategy is to build auto-encoder with this train set. If I put normal tweets that aren't related to troubles, the loss of the model would get high. Otherwise, the loss would get close to 0. If the loss is close to 0, I will consider that this tweet might talk about troubles. Thus, if a tweet make the loss low and a tweet include the target word such as “Justin Bieber”, I will notify this tweet through email.
+First of all, I collect a bunch of vocabulary list that is related to celebrities’ trouble such as drunk driving, guilty, or drug.
+Next, I filter the tweets that don’t include any vocabulary on the list based on the twitter sentiment dataset. What I get from the filtered dataset would have the same domain in terms of troubles. In other words, the train set would be only composed of anomalies. Third, my strategy is to build auto-encoder with this train set. If I put normal tweets that aren't related to troubles, the loss of the model would be too high. Otherwise, the loss would be close to 0. If the loss is close to 0, I will consider that this tweet might talk about troubles. Thus, if a tweet makes the loss low and it includes the target word such as “Justin Bieber”, I will notify this tweet through email.
 
 ##  4  Application Pipeline
 ![Pipeline](pipeline.png)
@@ -208,8 +208,8 @@ Replace Expression: `\1\1`
 ##  7  Experimentation
 
 The average loss of this model is approximately 0.5~ 0.6.
-That means, as long as I put the text which is in the same domain with the model, the loss would be about 0.5 or less.
-That's why I put the threshold as 0.5. If the loss is less than 0.5, I consider the tweet as a unsafe tweet.
+That means, as long as I put the text which is in the same domain as the model, the loss would be about 0.5 or less.
+That's why I put the threshold at 0.5. If the loss is less than 0.5, I consider the tweet as an unsafe tweet.
 
 ### unsafe tweets
 ![unsafe](unsafe.png)
@@ -229,11 +229,11 @@ If Justin Bieber is not the subject of the given sentence, I can skip the senten
 
 ##  9  Conclusion
 
-I created a early warning system for twitter data sets, and my auto-encoder works very well by showing that if I put the sentence which is in the same domain with this model, I can get the almost same sentence.
-For the given tweets samples from Gumgum, my classifier achieved an accuracy of around 60% with adjusted threshold.
+I created an early warning system for Twitter data sets, and my auto-encoder works very well by showing that if I put the sentence which is in the same domain with this model, I can get almost the same sentence.
+For the given tweet samples from Gumgum, my classifier achieved an accuracy of around 60% with adjusted threshold.
 However, due to the training time, I just trained 2 epoch of the train set.
-If I train more epoch and have more features by adding n-gram, stemming or synonym checking, the accuracy would be more improved.
-I really enjoyed this challenge and thanks your team for me to have this awesome challenge.
+If I train for more epochs and have more features by adding n-gram, stemming or synonym checking, the accuracy would be greatly improved.
+I really enjoyed this challenge and want to thank your team for this awesome challenge.
 
 
 ## References
