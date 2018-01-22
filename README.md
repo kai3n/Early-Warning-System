@@ -21,17 +21,17 @@ I was pondering for a long time as I was lying down on my bed at night, and I th
 First of all, I am going to collect a bunch of vocabulary list that is related to celebrities’ trouble such as drunk driving, guilty, or drug.
 Second, I am going to filter the tweets that don’t include any vocabulary of the list based on the twitter sentiment dataset. What I get from the filtered dataset would have the same domain in terms of troubles. In other words, the train set would be only composed of anomalies. Third, my strategy is to build auto-encoder with this train set. If I put normal tweets that aren't related to troubles, the loss of the model would get high. Otherwise, the loss would get close to 0. If the loss is close to 0, I will consider that this tweet might talk about troubles. Thus, if a tweet make the loss low and a tweet include the target word such as “Justin Bieber”, I will notify this tweet through email.
 
-## Application Pipeline
+## 3 Application Pipeline
 ![Pipeline](pipeline.png)
 
-##  3 Datasets
+##  4 Datasets
 
 One of the major challenges in Sentiment Analysis of Twitter is to collect a
 labelled dataset. Researchers have made public the following datasets for
 training and testing classifiers.
 
 
-##  4 Preprocessing
+##  5 Preprocessing
 
 User-generated content on the web is seldom present in a form usable for
 learning. It becomes important to normalize the text by applying a series of
@@ -39,7 +39,7 @@ pre-processing steps. We have applied an extensive set of pre-processing steps
 to decrease the size of the feature set to make it suitable for learning
 algorithms.
 
-###  4.1  Hashtags
+###  5.1  Hashtags
 
 A hashtag is a word or an un-spaced phrase prefixed with the hash symbol (#).
 These are used to both naming subjects and phrases that are currently in
@@ -49,7 +49,7 @@ Regular Expression: `#(\w+)`
 
 Replace Expression: `HASH_\1`
 
-###  4.2  Handles
+###  5.2  Handles
 
 Every Twitter user has a unique username. Any thing directed towards that user
 can be indicated be writing their username preceded by ‘@’. Thus, these are
@@ -59,7 +59,7 @@ Regular Expression: `@(\w+)`
 
 Replace Expression: `HNDL_\1`
 
-###  4.3  URLs
+###  5.3  URLs
 
 Users often share hyperlinks in their tweets. Twitter shortens them using its
 in-house URL shortening service, like http://t.co/FCWXoUd8 - such links also
@@ -74,7 +74,7 @@ Regular Expression: `(http|https|ftp)://[a-zA-Z0-9\\./]+`
 
 Replace Expression: `URL`
 
-###  4.4  Emoticons
+###  5.4  Emoticons
 
 Use of emoticons is very prevalent throughout the web, more so on micro-
 blogging sites. We identify the following emoticons and replace them with a
@@ -97,7 +97,7 @@ emoticons would be ignored.
 </a>
 </div>
 
-### 4.5  Punctuations
+### 5.5  Punctuations
 
 Although not all Punctuations are important from the point of view of
 classification but some of these, like question mark, exclamation mark can
@@ -120,7 +120,7 @@ quotes that might exist in the text.
 </a>
 </div>
 
-### 4.6  Repeating Characters
+### 5.6  Repeating Characters
 
 People often use repeating characters while using colloquial language, like
 "I’m in a hurrryyyyy", "We won, yaaayyyyy!" As our final pre-processing step,
@@ -130,9 +130,9 @@ Regular Expression: `(.)\1{1,}`
 
 Replace Expression: `\1\1`
 
-## 5 How to run
+## 6 How to run
 
-##  6  Experimentation
+##  7  Experimentation
 
 We train 90% of our data using different combinations of features and test
 them on the remaining 10%. We take the features in the following combinations
@@ -142,7 +142,7 @@ classifiers using different classification algorithms - Naive Bayes Classifier
 and Maximum Entropy Classifier.
 
 
-##  7  Future Work
+##  8  Future Work
 
 filtering the by more specific phrases
 
@@ -153,7 +153,7 @@ filtering the by more specific phrases
     bb
 
 
-##  8  Conclusion
+##  9  Conclusion
 
 We create a sentiment classifier for twitter using labelled
 data sets. We also investigate the relevance of using a double step classifier
