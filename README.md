@@ -198,7 +198,7 @@ Replace Expression: `\1\1`
 ### 6.3 Train Environment
 |                          |                             |
 | ------------------------ |:---------------------------:|
-| Training time            |  about 48 hours(172,438 sec)|
+| Training time            | About 48 hours(172,438 sec)|
 | Machine                  | MacBook Pro Processor 2GHz Intel Core i7 |
 | Memory                   | 8 GB 1600 MHz DDR3                       |
 | Graphics                 | Intel Iris Pro 1536 MB                   |
@@ -206,6 +206,10 @@ Replace Expression: `\1\1`
 
 
 ##  7  Experimentation
+
+
+![unsafe](unsafe.png)
+![safe](safe.png)
 
 We train 90% of our data using different combinations of features and test
 them on the remaining 10%. We take the features in the following combinations
